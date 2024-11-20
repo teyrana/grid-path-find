@@ -65,6 +65,10 @@ void print_map( const std::vector<int8_t> & map ){
             // better to visualize the terrain & channels
             if (3 == value){
                 std::cout << 'E';
+            } else if (0 == value){
+                std::cout << 'O';
+            } else if (8 == value){
+                std::cout << 'X';
             } else {
                 std::cout << ' ';
             }

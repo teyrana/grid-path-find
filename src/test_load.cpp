@@ -9,6 +9,18 @@ TEST_CASE( "Loader can load the example map", "[loader]" ) {
     // this is the required size specified in the project assignment (32 x 32 == 1024)
     REQUIRE( map.size() == MAP_SIZE );
 
-    print_map( map );
+    // perform some rough spot checks -- it's not enough to prove correct, but it's 
+    // a quick sanity check to make sure the loader is actually changing values
+    REQUIRE( map[0] == -1 );
+    REQUIRE( map[23] == -1 );
+    REQUIRE( map[32] == -1 );
+    REQUIRE( map[127] == 3 );
+    REQUIRE( map[128] == 3);
+    REQUIRE( map[129] == 3 );
+    REQUIRE( map[510] == 3 );
+    REQUIRE( map[511] == -1 );
+    REQUIRE( map[512] == -1 );
 
+    // for visualization
+    // print_map( map );
 }
