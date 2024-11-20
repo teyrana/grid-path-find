@@ -1,0 +1,15 @@
+
+
+## Dependencies
+
+### Catch2
+
+Automatically pulled in by the CMake setup, but it must already be available on your system.   
+
+If running Debian-based systems, this is as simple as `apt install catch2`
+
+
+
+## Testing Strategy
+
+This project has chosen in-tree tests (vs out-of-tree) because the test-files are located next to the test-target files. They are thematically and logistically co-located, and therefore removes unnecessary path actions.
