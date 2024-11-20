@@ -13,6 +13,8 @@ set( LIB_NAME search )
 add_library( ${LIB_NAME}
     ${CMAKE_SOURCE_DIR}/src/loader.hpp
     ${CMAKE_SOURCE_DIR}/src/loader.cpp
+    ${CMAKE_SOURCE_DIR}/src/search.hpp
+    ${CMAKE_SOURCE_DIR}/src/search.cpp
 )
 
 target_include_directories( ${LIB_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/extern/ )
