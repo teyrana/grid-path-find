@@ -2,9 +2,13 @@
 
 #include "loader.hpp"
 
-TEST_CASE( "Factorials are computed", "[factorial]" ) {
-    REQUIRE( factorial(1) == 1 );
-    REQUIRE( factorial(2) == 2 );
-    REQUIRE( factorial(3) == 6 );
-    REQUIRE( factorial(10) == 3628800 );
+TEST_CASE( "Loader can load the example map", "[loader]" ) {
+
+    std::vector<int8_t> map = load_map( "data/sample_map.json" );
+
+    // this is the required size specified in the project assignment (32 x 32 == 1024)
+    REQUIRE( map.size() == MAP_SIZE );
+
+    print_map( map );
+
 }
