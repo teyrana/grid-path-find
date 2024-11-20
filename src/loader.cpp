@@ -1,4 +1,5 @@
 // stdlib includes
+#include <cmath>
 #include <fstream>
 #include <iostream>
 
@@ -32,17 +33,21 @@ std::vector<int8_t> load_map( const std::string & filename ) {
     }
 
     // get the data array
-    std::vector<int8_t> grid = data["layers"][0]["data"].get<std::vector<int8_t>>();
+    std::vector<float> raw_grid = data["layers"][0]["data"].get<std::vector<float>>();
 
-    // grid.reserve( 1024 );
-    // grid.resize(1024);
+    std::vector<int8_t> grid;
+    grid.reserve(raw_grid.size());
+    grid.resize(raw_grid.size());
 
+    for (int i = 0; i < raw_grid.size(); i++){
+        constexpr float epsilon = 0.00001f;
+        const float raw_value = raw_grid[i];
 
-    // while( !file.eof() ) {
-    //     uint8_t byte;
-    //     file.read( reinterpret_cast<char*>(&byte), 1 );
-    //     map.push_back( byte );
-    // }
+        // it turns out the json grid contains fractional (float) values, 
+        // so we have to interpret the values somehow.  
+        // ==> we choose a simple floor funcition:
+        grid[i] = static_cast<int8_t>(floor(raw_value));
+    }
 
     return grid;
 }

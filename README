@@ -8,6 +8,17 @@ Automatically pulled in by the CMake setup, but it must already be available on 
 
 If running Debian-based systems, this is as simple as `apt install catch2`
 
+### nlohman::json
+
+Used for loading the json data files.
+
+
+## Data interpretation
+
+Although the requirements given don't specify, for an initial prototype, the following assumptions have been made:
+
+1. if a data cell contains a fractional value, it is truncated with the floor() function
+2. if multiple start points are allowed.  By default we use the first.
 
 
 ## Testing Strategy
