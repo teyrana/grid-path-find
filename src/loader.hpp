@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-constexpr size_t MAP_DIMENSION = 32;
-constexpr size_t MAP_SIZE = MAP_DIMENSION * MAP_DIMENSION;
+constexpr int32_t MAP_DIMENSION = 32;
+constexpr int32_t MAP_SIZE = MAP_DIMENSION * MAP_DIMENSION;
 
 std::vector<int8_t> load_map( const std::string & filename );
 
