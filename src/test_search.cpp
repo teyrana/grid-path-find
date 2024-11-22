@@ -36,6 +36,6 @@ TEST_CASE( "Loader can perform a simple search", "[search]" ) {
 
     REQUIRE( 1 < path.size() );
 
-    print_path( path );
+    print_path_steps( path );
 
 }

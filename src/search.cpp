@@ -46,6 +46,26 @@ float distance( int a, int b ){
     return sqrt( pow(ai - bi, 2) + pow(aj - bj, 2) );
 }
 
+int map_find_start( const std::vector<int8_t> map ){
+    for( int i = 0; i < map.size(); i++ ){
+        if( map[i] == MAP_VALUE_START ){
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+int map_find_goal( const std::vector<int8_t> map ){
+    for( int i = 0; i < map.size(); i++ ){
+        if( map[i] == MAP_VALUE_GOAL ){
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 path_t search_map_a_star( const std::vector<int8_t>& map, int start, int goal ){
     const int dim = sqrt(map.size());
 
@@ -114,23 +134,24 @@ path_t search_map_a_star( const std::vector<int8_t>& map, int start, int goal ){
                 continue;
             }
 
+            // if this terrain is not passable, skip
+            if( map[next_index] == MAP_VALUE_HIGH ){
+                continue;
+            }
+
             const float d = distance(next_index, goal);
 
             std::cout << "    +> push next @ " << next_index << "  cost: " << d << '\n';
             next.emplace(next_index, d, current.index);
         }
 
-        // debug // devel
-        if( 64 < current.index ){
-            break;
-        }
     }
 
     // error path
     return {};
 }
 
-void print_path( const path_t& path ){
+void print_path_steps( const path_t& path ){
     // print map to stdout
 
     std::cout << "Printing Path:" << std::endl;
@@ -143,6 +164,22 @@ void print_path( const path_t& path ){
         std::cout << "    #" << i << " [" << step << "]: (" << col << ", " << row << ")\n";
         i++;
     }
+
+    std::cout << "\n" << std::endl;
+}
+
+void print_path_map( const path_t& path ){
+    // print map to stdout
+
+    std::vector<int8_t> to_print( MAP_SIZE, -1 );
+
+    int i = 0;
+    for( auto step : path ){
+        to_print[step] = 1;
+        i++;
+    }
+
+    print_map( to_print );
 
     std::cout << "\n" << std::endl;
 }

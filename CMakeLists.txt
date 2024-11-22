@@ -22,7 +22,7 @@ target_include_directories( ${LIB_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/extern/ )
 
 # Build Executable
 # =============================
-set( EXE_NAME pather )
+set( EXE_NAME mapsearch )
 add_executable( ${EXE_NAME} ${CMAKE_SOURCE_DIR}/src/main.cpp )
 target_link_libraries( ${EXE_NAME} PRIVATE ${LIB_NAME} )
 

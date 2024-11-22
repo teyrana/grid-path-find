@@ -7,6 +7,11 @@
 constexpr int32_t MAP_DIMENSION = 32;
 constexpr int32_t MAP_SIZE = MAP_DIMENSION * MAP_DIMENSION;
 
+constexpr int8_t MAP_VALUE_PASSABLE = -1;
+constexpr int8_t MAP_VALUE_HIGH = 3;
+constexpr int8_t MAP_VALUE_START = 0;
+constexpr int8_t MAP_VALUE_GOAL = 8;
+
 std::vector<int8_t> load_map( const std::string & filename );
 
 void print_map( const std::vector<int8_t> & map );
