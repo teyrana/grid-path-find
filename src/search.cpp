@@ -83,12 +83,22 @@ path_t search_map_a_star( const std::vector<int8_t>& map, int start, int goal ){
     
     next.emplace( start, distance(start,goal), start );
 
+    size_t iteration_count = 0;
     while( 0 < next.size() ){
+        iteration_count++;
+
+        // if we exceed this many iterations, something has _definitely_ gone wrong
+        if( MAP_SIZE < iteration_count ){
+            std::cerr << "    iteration count exceeded MAP_SIZE!!\n";
+            break;
+        }
 
         const Step current = next.top();
         next.pop();
 
-        std::cout << "@ step: " << current.index << ",   cost: " << current.cost << '\n';
+        // #ifdef DEBUG
+        // std::cout << "@ step: " << current.index << ",   cost: " << current.cost << '\n';
+        // #endif
 
         // mark index as visited, and path backwards
         parents[current.index] = current.parent;
@@ -98,13 +108,13 @@ path_t search_map_a_star( const std::vector<int8_t>& map, int start, int goal ){
             // sucess condition -- build the return path
             path_t path;
 
-            std::cout << "goal found! -- constructing path\n";
+            // std::cout << "goal found! --> constructing path\n";
 
             int path_index = current.index;
             path.push_back(path_index); // push the final coordinate
 
             while( parents[path_index] != path_index ){
-                std::cerr << "    +> path @ " << path_index << '\n';
+                // std::cerr << "    +> path @ " << path_index << '\n';
                 path_index = parents[path_index];
                 if (path_index < 0){
                     std::cerr << "    invalid path index!! BUG!!\n";
@@ -141,7 +151,7 @@ path_t search_map_a_star( const std::vector<int8_t>& map, int start, int goal ){
 
             const float d = distance(next_index, goal);
 
-            std::cout << "    +> push next @ " << next_index << "  cost: " << d << '\n';
+            // std::cout << "    +> push next @ " << next_index << "  cost: " << d << '\n';
             next.emplace(next_index, d, current.index);
         }
 
@@ -168,16 +178,22 @@ void print_path_steps( const path_t& path ){
     std::cout << "\n" << std::endl;
 }
 
-void print_path_map( const path_t& path ){
-    // print map to stdout
+void print_path_map( const std::vector<int8_t>& map, int start, int goal, const path_t& path ){
 
     std::vector<int8_t> to_print( MAP_SIZE, -1 );
+
+    std::copy( map.begin(), map.end(), to_print.begin() );
 
     int i = 0;
     for( auto step : path ){
         to_print[step] = 1;
         i++;
     }
+
+    // overwrite the ends of the path, so they print pretty.
+    // we could detect this with fancy logic, but this is easier.
+    to_print[start] = MAP_VALUE_START;
+    to_print[goal] = MAP_VALUE_GOAL;
 
     print_map( to_print );
 

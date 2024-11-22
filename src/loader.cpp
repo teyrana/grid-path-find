@@ -54,15 +54,10 @@ std::vector<int8_t> load_map( const std::string & filename ) {
 
 
 void print_map( const std::vector<int8_t> & map ){
-    // print map to stdout
-
     for( int i = 0; i < MAP_DIMENSION; i++ ) {
         for( int j = 0; j < MAP_DIMENSION; j++ ) {
             const int32_t value = static_cast<int>( map[i*32+j] );
             std::cout << ' ';
-
-            // raw values, for debugging
-            // std::cout << value;
 
             // better to visualize the terrain & channels
             if (MAP_VALUE_HIGH == value){
@@ -73,7 +68,7 @@ void print_map( const std::vector<int8_t> & map ){
                 std::cout << '#';
             } else if ( 1 == value ){
                 // path-visited cell
-                std::cout << 'o';
+                std::cout << '.';
             } else {
                 // MAP_VALUE_PASSABLE
                 std::cout << ' ';
